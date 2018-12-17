@@ -1,0 +1,27 @@
+---
+{% if subdir == 'tasks' %}
+# Contains the main list of tasks to be executed by the role.
+# Don't add tasks directly to the main.yml use includes instead
+- include_tasks: setup.yml
+{% endif %}
+{% if subdir == 'handlers' %}
+# Contains handlers, which may be used by this role or
+# even anywhere outside this role.
+{% endif %}
+{% if subdir == 'defaults' %}
+# Default variables for the role.
+{% endif %}
+{% if subdir == 'meta' %}
+galaxy_info:
+  author: {{ vars.meta.author | default('UNKNOWN') }}
+  description: Deploy some application
+  license: {{ vars.meta.author | default('MIT') }}
+  min_ansible_version: 2.4
+  platforms:
+    - name: EL
+        versions:
+          - 7
+  galaxy_tags:
+    - myapp
+dependencies: []
+{% endif %}

@@ -1,0 +1,3 @@
+- CHANGES
+  - first build release
+  - provide pre-puild packages and publish releases to pypi

@@ -1,0 +1,16 @@
+[flake8]
+ignore = W503
+max-line-length = 120
+exclude =
+    .tox,
+    .git,
+    __pycache__,
+    build,
+    dist,
+    tests/fixtures/*,
+    *.pyc,
+    *.egg-info,
+    .cache,
+    .eggs
+#format = %(path)s:%(row)d:%(col)d: ${red}%(code)s %(text)s${reset}
+format = '%(path)s:%(row)d: [%(code)s] %(text)s'

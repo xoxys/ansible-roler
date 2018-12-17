@@ -1,0 +1,8 @@
+pipeline:
+  test:
+    image: ansible/ansible
+    pull: true
+    when:
+      event:
+        - push
+        - tag
