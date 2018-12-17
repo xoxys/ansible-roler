@@ -6,15 +6,14 @@ steps:
   - name: test2.7
     image: python:2.7-alpine
     pull: always
-    group: test
     commands:
       - apk add --no-cache openssl-dev libffi-dev build-base
       - pip install --upgrade pip setuptools wheel -q
       - pip install -r test-requirements.txt -q
-      - flake8 ansiblerole
+      - flake8 ansibleroler
       - pip install . -q
       - pip install -e . -q
-      - pytest --cov=ansiblerole tests/ -v
+      - pytest --cov=ansibleroler tests/ -v
     when:
       event:
         - push
@@ -23,14 +22,13 @@ steps:
   - name: test3.4
     image: python:3.4-alpine
     pull: always
-    group: test
     commands:
       - apk add --no-cache openssl-dev libffi-dev build-base
       - pip install --upgrade pip setuptools wheel -q
       - pip install -r test-requirements.txt -q
-      - flake8 ansiblerole
+      - flake8 ansibleroler
       - pip install -e . -q
-      - pytest --cov=ansiblerole tests/ -v
+      - pytest --cov=ansibleroler tests/ -v
     when:
       event:
         - push
@@ -39,14 +37,13 @@ steps:
   - name: test3.6
     image: python:3.6-alpine
     pull: always
-    group: test
     commands:
       - apk add --no-cache openssl-dev libffi-dev build-base
       - pip install --upgrade pip setuptools wheel -q
       - pip install -r test-requirements.txt -q
-      - flake8 ansiblerole
+      - flake8 ansibleroler
       - pip install -e . -q
-      - pytest --cov=ansiblerole tests/ -v
+      - pytest --cov=ansibleroler tests/ -v
     when:
       event:
         - push
@@ -55,14 +52,13 @@ steps:
   - name: test3.7
     image: python:3.7-alpine
     pull: always
-    group: test
     commands:
       - apk add --no-cache openssl-dev libffi-dev build-base
       - pip install --upgrade pip setuptools wheel -q
       - pip install -r test-requirements.txt -q
-      - flake8 ansiblerole
+      - flake8 ansibleroler
       - pip install -e . -q
-      - pytest --cov=ansiblerole tests/ -v
+      - pytest --cov=ansibleroler tests/ -v
     when:
       event:
         - push
@@ -77,22 +73,24 @@ steps:
       event:
         - push
         - tag
+    depends_on: ['test2.7', 'test3.4', 'test3.6', 'test3.7']
 
-  # gpg-sign:
-  #   image: plugins/gpgsign:1
-  #   pull: always
-  #   secrets:
-  #     - gpgsign_key
-  #     - gpgsign_passphrase
-  #   detach_sign: true
-  #   files:
-  #     - dist/*
-  #   excludes:
-  #     - dist/*.sha256
-  #   when:
-  #     event:
-  #       - push
-  #       - tag
+  - name: gpg-sign
+    image: plugins/gpgsign:1
+    pull: always
+    secrets:
+      - gpgsign_key
+      - gpgsign_passphrase
+    detach_sign: true
+    files:
+      - dist/*
+    excludes:
+      - dist/*.sha256
+    when:
+      event:
+        - push
+        - tag
+    depends_on: ['test2.7', 'test3.4', 'test3.6', 'test3.7']
 
   # pypi_publish:
   #   image: xoxys/drone-pypi:0.1.0

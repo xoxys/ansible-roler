@@ -1,5 +1,5 @@
-from ansiblerole.utils import Settings
-from ansiblerole.utils import template
+from ansibleroler.utils import Settings
+from ansibleroler.utils import template
 
 try:
     from unittest.mock import call
@@ -17,7 +17,7 @@ def jinja_dump_to_string(path):
 
 def test_add_role(mocker):
     mocker.patch('os.makedirs')
-    mocker.patch('ansiblerole.utils.template._render_template', side_effect=simple_render_template)
+    mocker.patch('ansibleroler.utils.template._render_template', side_effect=simple_render_template)
     settings = Settings(enable_templating=True, role_name='myrole')
 
     assert template.add_role(settings) is None

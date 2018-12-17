@@ -1,20 +1,20 @@
 import os
 import logging
-import ansiblerole.utils as utils
+import ansibleroler.utils as utils
 
 
 def test_setup_logging():
     assert utils.setup_logging(log_level='WARNING') is None
-    assert logging.getLogger("ansiblerole").getEffectiveLevel() == 30
+    assert logging.getLogger("ansibleroler").getEffectiveLevel() == 30
     assert utils.setup_logging(log_level=10) is None
-    assert logging.getLogger("ansiblerole").getEffectiveLevel() == 10
+    assert logging.getLogger("ansibleroler").getEffectiveLevel() == 10
 
 
 def test_update_log_level():
     assert utils.update_log_level(log_level='WARNING') is None
-    assert logging.getLogger("ansiblerole").getEffectiveLevel() == 30
+    assert logging.getLogger("ansibleroler").getEffectiveLevel() == 30
     assert utils.update_log_level(log_level=10) is None
-    assert logging.getLogger("ansiblerole").getEffectiveLevel() == 10
+    assert logging.getLogger("ansibleroler").getEffectiveLevel() == 10
 
 
 def test_normalize_path():

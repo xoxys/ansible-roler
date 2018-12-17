@@ -21,7 +21,7 @@
 
 ```Shell
 # From internal pip repo as user
-pip install ansible-roler  --user
+pip install ansible-roler --user
 
 # .. or as root
 sudo pip install ansible-roler

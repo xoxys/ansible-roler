@@ -1,4 +1,4 @@
 include README.md
 include LICENSE
-include ansiblerole/config*.ini
-include ansiblerole/static/*
+include ansibleroler/config*.ini
+include ansibleroler/static/*

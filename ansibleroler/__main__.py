@@ -3,9 +3,9 @@
 
 import logging
 import argparse
-from ansiblerole import defaults
-from ansiblerole.utils.settings import get_settings
-from ansiblerole.utils.template import add_role
+from ansibleroler import defaults
+from ansibleroler.utils.settings import get_settings
+from ansibleroler.utils.template import add_role
 
 
 def main():
@@ -27,7 +27,7 @@ def main():
         options.log_level = levels[min(len(levels) - 1, options.log_level - 1)]
 
     settings = get_settings(options)
-    logger = logging.getLogger("ansiblerole")
+    logger = logging.getLogger("ansibleroler")
 
     if not (settings.role_name):
         parser.error('No rolename provided but required.')

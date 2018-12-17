@@ -6,7 +6,7 @@ import os
 from setuptools import find_packages
 from setuptools import setup
 
-PACKAGE_NAME = "ansiblerole"
+PACKAGE_NAME = "ansibleroler"
 
 
 def get_property(prop, project):
@@ -27,9 +27,9 @@ setup(
     url="https://github.com/xoxys/ansible-role",
     packages=find_packages(exclude=["tests", "tests.*"]),
     # include_package_data=True,
-    package_dir={'ansiblerole': 'ansiblerole'},
+    package_dir={'ansibleroler': 'ansibleroler'},
     package_data={
-        'ansiblerole': [
+        'ansibleroler': [
             'static/config/*.ini',
             'static/config/*.yml',
             'static/templates/*'
@@ -43,7 +43,7 @@ setup(
     ],
     entry_points={
         'console_scripts': [
-            'ansible-role = ansiblerole.__main__:main'
+            'ansible-roler = ansibleroler.__main__:main'
         ]
     }
 )

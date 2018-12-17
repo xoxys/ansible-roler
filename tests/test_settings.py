@@ -2,9 +2,9 @@ import pytest
 import os
 from pkg_resources import resource_filename
 from argparse import Namespace
-from ansiblerole.utils.settings import get_settings
-from ansiblerole.utils.settings import _validate_config
-from ansiblerole.utils import Settings
+from ansibleroler.utils.settings import get_settings
+from ansibleroler.utils.settings import _validate_config
+from ansibleroler.utils import Settings
 
 
 @pytest.fixture()
@@ -29,12 +29,12 @@ def simple_normalize_path(path):
 
 
 def test_get_settings(mocker, test_options):
-    mocker.patch('ansiblerole.utils.settings._validate_config', side_effect=simple_validate_config)
-    mocker.patch('ansiblerole.utils.settings.update_log_level', side_effect=simple_update_log_level)
-    mocker.patch('ansiblerole.utils.settings.convert_bool', side_effect=simple_convert_bool)
-    mocker.patch('ansiblerole.utils.settings.normalize_path', side_effect=simple_normalize_path)
+    mocker.patch('ansibleroler.utils.settings._validate_config', side_effect=simple_validate_config)
+    mocker.patch('ansibleroler.utils.settings.update_log_level', side_effect=simple_update_log_level)
+    mocker.patch('ansibleroler.utils.settings.convert_bool', side_effect=simple_convert_bool)
+    mocker.patch('ansibleroler.utils.settings.normalize_path', side_effect=simple_normalize_path)
     result = get_settings(test_options)
-    template = os.path.join(resource_filename('ansiblerole', 'static'), 'templates', 'main.yml.j2')
+    template = os.path.join(resource_filename('ansibleroler', 'static'), 'templates', 'main.yml.j2')
 
     assert type(result) is Settings
     assert result.config_file == "empty.ini"

@@ -2,14 +2,14 @@ import os
 import logging
 import configparser
 from collections import defaultdict
-from ansiblerole.utils import Settings
-from ansiblerole.utils import normalize_path
-from ansiblerole.utils import convert_bool
-from ansiblerole.utils import update_log_level
+from ansibleroler.utils import Settings
+from ansibleroler.utils import normalize_path
+from ansibleroler.utils import convert_bool
+from ansibleroler.utils import update_log_level
 
 
 def get_settings(options):
-    logger = logging.getLogger("ansiblerole")
+    logger = logging.getLogger("ansibleroler")
     defaults = Settings()
     config_file = normalize_path(options.config_file)
 
@@ -42,7 +42,7 @@ def get_settings(options):
 
 
 def _validate_config(settings):
-    logger = logging.getLogger("ansiblerole")
+    logger = logging.getLogger("ansibleroler")
     defaults = Settings()
     log_level_allowed = ('warning', 'error', 'info', 'debug', 10, 20, 30, 40)
 

@@ -7,20 +7,20 @@ from pkg_resources import resource_filename
 
 
 def setup_logging(log_level):
-    log_config_file = os.path.join(resource_filename('ansiblerole', 'static'), 'config', 'logging.yml')
+    log_config_file = os.path.join(resource_filename('ansibleroler', 'static'), 'config', 'logging.yml')
     level = logging.getLevelName(log_level)
     with open(log_config_file, 'rt') as f:
         log_config = yaml.safe_load(f.read())
     logging.config.dictConfig(log_config)
     if level:
-        logging.getLogger("ansiblerole").setLevel(level)
+        logging.getLogger("ansibleroler").setLevel(level)
     return
 
 
 def update_log_level(log_level):
     level = logging.getLevelName(log_level)
     if level:
-        logging.getLogger("ansiblerole").setLevel(level)
+        logging.getLogger("ansibleroler").setLevel(level)
     return
 
 
@@ -45,12 +45,12 @@ def convert_bool(obj):
 class Settings(object):
     def __init__(
         self,
-        config_file=os.path.join(AppDirs("ansible-role").user_config_dir, "config.ini"),
+        config_file=os.path.join(AppDirs("ansible-roler").user_config_dir, "config.ini"),
         role_name=None,
         base_path=os.getcwd(),
         log_level='WARNING',
-        subdir_template=os.path.join(resource_filename('ansiblerole', 'static'), 'templates', 'main.yml.j2'),
-        root_template=os.path.join(resource_filename('ansiblerole', 'static'), 'templates', '.drone.yml.j2'),
+        subdir_template=os.path.join(resource_filename('ansibleroler', 'static'), 'templates', 'main.yml.j2'),
+        root_template=os.path.join(resource_filename('ansibleroler', 'static'), 'templates', '.drone.yml.j2'),
         enable_templating=False,
         template_vars={}
     ):

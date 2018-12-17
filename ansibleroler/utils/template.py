@@ -1,6 +1,6 @@
 import jinja2
 import os
-from ansiblerole.utils import normalize_path
+from ansibleroler.utils import normalize_path
 
 
 def add_role(settings):

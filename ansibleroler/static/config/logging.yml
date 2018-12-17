@@ -13,7 +13,7 @@ handlers:
         stream: ext://sys.stdout
 
 loggers:
-    ansiblerole:
+    ansibleroler:
         level: ERROR
         handlers: [console]
         propagate: no
