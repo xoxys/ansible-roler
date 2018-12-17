@@ -82,9 +82,11 @@ steps:
   - name: gpg-sign
     image: plugins/gpgsign:1
     pull: always
-    secrets:
-      - gpgsign_key
-      - gpgsign_passphrase
+    environment:
+      GPGSIGN_KEY:
+        from_secret: gpgsign_key
+      GPGSIGN_PASSPHRASE:
+        from_secret: gpgsign_passphrase
     detach_sign: true
     files:
       - dist/*
