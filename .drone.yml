@@ -73,7 +73,11 @@ steps:
       event:
         - push
         - tag
-    depends_on: ['test2.7', 'test3.4', 'test3.6', 'test3.7']
+    depends_on:
+      - test2.7
+      - test3.4
+      - test3.6
+      - test3.7
 
   - name: gpg-sign
     image: plugins/gpgsign:1
@@ -90,16 +94,25 @@ steps:
       event:
         - push
         - tag
-    depends_on: ['test2.7', 'test3.4', 'test3.6', 'test3.7']
+    depends_on:
+      - test2.7
+      - test3.4
+      - test3.6
+      - test3.7
 
-  # pypi_publish:
-  #   image: xoxys/drone-pypi:0.1.0
-  #   pull: always
-  #   secrets:
-  #     - pypi_username
-  #     - pypi_password
-  #   repository:
-  #   skip_build: true
-  #   when:
-  #     event:
-  #       - tag
+  - name: pypi_publish
+    image: xoxys/drone-pypi:0.1.0
+    pull: always
+    secrets:
+      - pypi_username
+      - pypi_password
+    repository:
+    skip_build: true
+    when:
+      event:
+        - tag
+    depends_on:
+      - test2.7
+      - test3.4
+      - test3.6
+      - test3.7
