@@ -79,7 +79,7 @@ steps:
       - test3.6
       - test3.7
 
-  - name: build
+  - name: checksum
     image: alpine
     pull: always
     commands:
