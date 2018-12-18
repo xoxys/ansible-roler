@@ -79,6 +79,23 @@ steps:
       - test3.6
       - test3.7
 
+  - name: build
+    image: python:3.7-alpine
+    pull: always
+    commands:
+      # exclude files
+      # - sha256sum -b files/!(*.out) > CHECKSUMFILE
+      - sha256sum -b dist/* > sha256sum.txt
+    when:
+      event:
+        - push
+        - tag
+    depends_on:
+      - test2.7
+      - test3.4
+      - test3.6
+      - test3.7
+
   - name: gpg-sign
     image: plugins/gpgsign:1
     pull: always
@@ -108,7 +125,6 @@ steps:
       api_key:
         from_secret: github_token
       files: dist/*
-      checksum: sha256
     when:
       event:
         - tag
