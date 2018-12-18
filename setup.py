@@ -16,6 +16,13 @@ def get_property(prop, project):
     return result.group(1)
 
 
+def get_readme(filename='README.md'):
+    this = os.path.abspath(os.path.dirname(__file__))
+    with open(os.path.join(this, filename), encoding='utf-8') as f:
+        long_description = f.read()
+    return long_description
+
+
 setup(
     name=get_property("__project__", PACKAGE_NAME),
     version=get_property("__version__", PACKAGE_NAME),
@@ -25,6 +32,8 @@ setup(
     author_email=get_property("__email__", PACKAGE_NAME),
     license=get_property("__license__", PACKAGE_NAME),
     url="https://github.com/xoxys/ansible-role",
+    long_description=get_readme(),
+    long_description_content_type='text/markdown',
     packages=find_packages(exclude=["tests", "tests.*"]),
     # include_package_data=True,
     package_dir={'ansibleroler': 'ansibleroler'},
