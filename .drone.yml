@@ -108,6 +108,7 @@ steps:
       api_key:
         from_secret: github_token
       files: dist/*
+      checksum: sha256
     when:
       event:
         - tag
@@ -120,11 +121,13 @@ steps:
   - name: pypi_publish
     image: xoxys/drone-pypi:0.1.0
     pull: always
-    secrets:
-      - pypi_username
-      - pypi_password
-    repository:
-    skip_build: true
+    settings:
+      username:
+        from_secret: pypi_username
+      password:
+        from_secret: pypi_password
+      repository: https://upload.pypi.org/legacy/
+      skip_build: true
     when:
       event:
         - tag
