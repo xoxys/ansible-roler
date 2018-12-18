@@ -1,4 +1,3 @@
-SHELL=/bin/bash
 PYTHON_LINT=flake8 flake8-colors pep8-naming
 PYTHON_TEST=pytest pytest-cov pytest-mock
 
