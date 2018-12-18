@@ -29,6 +29,19 @@ steps:
         - push
         - tag
 
+  - name: test3.5
+    image: python:3.5-alpine
+    pull: always
+    commands:
+      - apk add --no-cache make
+      - make prepare
+      - make lint
+      - make test
+    when:
+      event:
+        - push
+        - tag
+
   - name: test3.6
     image: python:3.6-alpine
     pull: always
@@ -67,6 +80,7 @@ steps:
     depends_on:
       - test2.7
       - test3.4
+      - test3.5
       - test3.6
       - test3.7
 
@@ -85,6 +99,7 @@ steps:
     depends_on:
       - test2.7
       - test3.4
+      - test3.5
       - test3.6
       - test3.7
 
@@ -106,6 +121,7 @@ steps:
     depends_on:
       - test2.7
       - test3.4
+      - test3.5
       - test3.6
       - test3.7
 
@@ -123,6 +139,7 @@ steps:
     depends_on:
       - test2.7
       - test3.4
+      - test3.5
       - test3.6
       - test3.7
 
@@ -142,5 +159,6 @@ steps:
     depends_on:
       - test2.7
       - test3.4
+      - test3.5
       - test3.6
       - test3.7
