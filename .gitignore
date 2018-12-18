@@ -98,3 +98,4 @@ ENV/
 .vscode
 .pytest_cache
 .DS_Store
+env*/

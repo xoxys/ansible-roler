@@ -1,6 +1,3 @@
 flake8
 flake8-colors
 pep8-naming
-pytest
-pytest-cov
-pytest-mock
