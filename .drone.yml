@@ -85,7 +85,7 @@ steps:
       - apk add --no-cache coreutils
       # exclude files
       # - sha256sum -b files/!(*.out) > CHECKSUMFILE
-      - sha256sum -b dist/* > dist/sha256sum.txt
+      - sha256sum -b dist/* > sha256sum.txt
     when:
       event:
         - push
@@ -107,8 +107,6 @@ steps:
       detach_sign: true
       files:
         - dist/*
-      excludes:
-        - dist/sha256sum.txt
     when:
       event:
         - push
@@ -124,7 +122,9 @@ steps:
     settings:
       api_key:
         from_secret: github_token
-      files: dist/*
+      files:
+        - dist/*
+        - sha256sum.txt
     when:
       event:
         - tag
