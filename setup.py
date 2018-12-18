@@ -49,7 +49,8 @@ setup(
     install_requires=[
         "appdirs",
         "jinja2",
-        "PyYAML"
+        "PyYAML",
+        "configparser"
     ],
     entry_points={
         'console_scripts': [
