@@ -8,7 +8,7 @@ prepare:
 test:
 	virtualenv /env-test
 	env /env-test/bin/pip install ${PYTHON_TEST} -q
-	env /env-test/bin/pip install -e -q .
+	env /env-test/bin/pip install -e . -q
 	env /env-test/bin/pytest --cov=ansibleroler tests/ -v
 
 lint:
