@@ -3,6 +3,7 @@
 
 import re
 import os
+import io
 from setuptools import find_packages
 from setuptools import setup
 
@@ -18,7 +19,7 @@ def get_property(prop, project):
 
 def get_readme(filename='README.md'):
     this = os.path.abspath(os.path.dirname(__file__))
-    with open(os.path.join(this, filename), encoding='utf-8') as f:
+    with io.open(os.path.join(this, filename), encoding='utf-8') as f:
         long_description = f.read()
     return long_description
 
