@@ -12,7 +12,7 @@ steps:
       - pip install -r test-requirements.txt -q
       - flake8 ansibleroler
       - pip install . -q
-      - pip install -e . -q
+      - pip install -e .
       - pytest --cov=ansibleroler tests/ -v
     when:
       event:
