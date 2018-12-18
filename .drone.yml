@@ -20,19 +20,10 @@ steps:
     image: python:3.4-alpine
     pull: always
     commands:
-      - apk add --no-cache openssl-dev libffi-dev build-base
-      - pip install --upgrade pip setuptools wheel virtualenv -q
-      - virtualenv /env-lint
-      - source /env-lint/bin/activate
-      - pip install -r tests/lint-requirements.txt -q
-      - flake8 ansibleroler
-      - deactivate
-      - virtualenv /env-test
-      - source /env-test/bin/activate
-      - pip install -r tests/test-requirements.txt -q
-      - pip install . -q
-      - pytest --cov=ansibleroler tests/ -v
-      - deactivate
+      - apk add --no-cache make
+      - make prepare
+      - make lint
+      - make test
     when:
       event:
         - push
@@ -42,12 +33,10 @@ steps:
     image: python:3.6-alpine
     pull: always
     commands:
-      - apk add --no-cache openssl-dev libffi-dev build-base
-      - pip install --upgrade pip setuptools wheel -q
-      - pip install -r test-requirements.txt -q
-      - flake8 ansibleroler
-      - pip install -e . -q
-      - pytest --cov=ansibleroler tests/ -v
+      - apk add --no-cache make
+      - make prepare
+      - make lint
+      - make test
     when:
       event:
         - push
@@ -57,12 +46,10 @@ steps:
     image: python:3.7-alpine
     pull: always
     commands:
-      - apk add --no-cache openssl-dev libffi-dev build-base
-      - pip install --upgrade pip setuptools wheel -q
-      - pip install -r test-requirements.txt -q
-      - flake8 ansibleroler
-      - pip install -e . -q
-      - pytest --cov=ansibleroler tests/ -v
+      - apk add --no-cache make
+      - make prepare
+      - make lint
+      - make test
     when:
       event:
         - push
