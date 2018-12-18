@@ -7,12 +7,11 @@ prepare:
 
 test:
 	virtualenv /env-test
-	pip install ${PYTHON_TEST} -q
-	pip install . -q
+	env /env-test/bin/pip install ${PYTHON_TEST} -q
+	env /env-test/bin/pip install . -q
 	env /env-test/bin/pytest --cov=ansibleroler tests/ -v
 
 lint:
 	virtualenv /env-lint
-	. /env-lint/bin/activate
-	pip install ${PYTHON_LINT} -q
+	env /env-lint/bin/pip install ${PYTHON_LINT} -q
 	env /env-lint/bin/flake8 ansibleroler
