@@ -14,7 +14,7 @@ steps:
       - pip install -r tests/lint-requirements.txt -q
       - flake8 ansibleroler
       - deactivate
-      - virtualenv env-test
+      - virtualenv /env-test
       - source /env-test/bin/activate
       - pip install -r tests/test-requirements.txt -q
       - pip install . -q
@@ -37,7 +37,7 @@ steps:
       - pip install -r tests/lint-requirements.txt -q
       - flake8 ansibleroler
       - deactivate
-      - virtualenv env-test
+      - virtualenv /env-test
       - source /env-test/bin/activate
       - pip install -r tests/test-requirements.txt -q
       - pip install . -q
