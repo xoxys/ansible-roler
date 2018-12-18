@@ -102,6 +102,21 @@ steps:
       - test3.6
       - test3.7
 
+  - name: publish
+    image: plugins/github-release
+    settings:
+      api_key:
+        from_secret: github_token
+      files: dist/*
+    when:
+      event:
+        - tag
+    depends_on:
+      - test2.7
+      - test3.4
+      - test3.6
+      - test3.7
+
   - name: pypi_publish
     image: xoxys/drone-pypi:0.1.0
     pull: always
