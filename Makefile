@@ -7,7 +7,7 @@ prepare:
 
 test:
 	virtualenv /env-test
-	source /env-test/bin/activate
+	. /env-test/bin/activate
 	pip install ${PYTHON_TEST} -q
 	pip install . -q
 	pytest --cov=ansibleroler tests/ -v
@@ -15,7 +15,7 @@ test:
 
 lint:
 	virtualenv /env-lint
-	source /env-lint/bin/activate
+	. /env-lint/bin/activate
 	pip install ${PYTHON_LINT} -q
 	flake8 ansibleroler
 	deactivate
