@@ -11,7 +11,7 @@ steps:
       - pip install --upgrade pip setuptools wheel -q
       - pip install -r test-requirements.txt -q
       - flake8 ansibleroler
-      - pip install -e .
+      - pip install -e . -q
       - pytest --cov=ansibleroler tests/ -v
     when:
       event:
