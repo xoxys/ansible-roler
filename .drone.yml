@@ -108,7 +108,7 @@ steps:
       files:
         - dist/*
       excludes:
-        - dist/*.sha256
+        - dist/sha256sum.txt
     when:
       event:
         - push
