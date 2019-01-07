@@ -1,4 +1,5 @@
 import os
+import six
 import logging
 from configparser import ConfigParser
 from collections import defaultdict
@@ -33,17 +34,17 @@ def get_settings(options):
             setattr(defaults, key, value)
 
     # Transform loglevel string
-    if isinstance(defaults.log_level, str):
+    if isinstance(defaults.log_level, six.text_type):
         defaults.log_level = defaults.log_level.upper()
+
+    # Transform string to array for exclude_subdirs
+    if isinstance(defaults.exclude_subdirs, six.text_type):
+        defaults.exclude_subdirs = [x.strip() for x in defaults.exclude_subdirs.split(",")]
+    elif not defaults.exclude_subdirs:
+        defaults.exclude_subdirs = []
 
     settings = _validate_config(defaults)
     update_log_level(log_level=settings.log_level)
-
-    # Transform string to array for exclude_subdirs
-    if isinstance(defaults.exclude_subdirs, str):
-        settings.exclude_subdirs = [x.strip() for x in settings.exclude_subdirs.split(",")]
-    elif not settings.exclude_subdirs:
-        settings.exclude_subdirs = []
 
     if not os.path.exists(config_file):
         logger.info("Config file '{}' not found. Use default settings.".format(config_file))
@@ -65,10 +66,5 @@ def _validate_config(settings):
         logger.warning(
             "Misconfigured value for 'enable_templating'. Set to default '{}'".format(defaults.enable_templating))
         settings.enable_templating = defaults.enable_templating
-
-    if not all(isinstance(s.encode('utf8'), str) for s in settings.exclude_subdirs):
-        logger.warning(
-            "Misconfigured value for 'exclude_subdirs'. Set to default '{}'".format(defaults.exclude_subdirs))
-        settings.exclude_subdirs = defaults.exclude_subdirs
 
     return settings

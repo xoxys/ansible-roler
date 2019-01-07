@@ -65,6 +65,7 @@ setup(
     },
     zip_safe=False,
     install_requires=[
+        "six",
         "appdirs",
         "jinja2",
         "PyYAML",

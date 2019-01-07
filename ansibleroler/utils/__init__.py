@@ -1,3 +1,4 @@
+import six
 import os
 import yaml
 import logging
@@ -39,7 +40,9 @@ def convert_bool(obj):
     elif obj in false_values:
         return False
     else:
-        return obj.encode("utf-8")
+        if not isinstance(obj, six.text_type):
+            obj = six.text_type(obj, "utf-8")
+        return obj
 
 
 class Settings(object):
