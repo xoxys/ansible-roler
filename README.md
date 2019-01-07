@@ -103,6 +103,9 @@ enable_templating=false
 # if not in config file default one will be used
 # if added empty 'subdir_template=' subdir templating is disabled
 subdir_template=/home/jdoe/ansible/custom/main.yaml.j2
+# if you like you can exclude some subdirs from templating
+# these folders will be left empty
+exclude_subdirs=templates,vars,files
 # path to your own ci template file
 # if not in config file default one will be used
 # if added empty 'ci_template=' ci templating is disabled
@@ -139,8 +142,8 @@ galaxy_info:
   min_ansible_version: 2.4
   platforms:
     - name: EL
-        versions:
-          - 7
+      versions:
+        - 7
   galaxy_tags:
     - myapp
 dependencies: []
