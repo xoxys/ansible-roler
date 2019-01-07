@@ -46,7 +46,7 @@ def test_get_settings(mocker, test_options):
     result = get_settings(Namespace(config_file="tests/testconfig.ini"))
     assert type(result) is Settings
     assert result.template_vars['meta']['bool'] == 'yes'
-    assert result.log_level == 'warning'
+    assert result.log_level == 'DEBUG'
 
 
 def test_validate_config():
@@ -54,7 +54,7 @@ def test_validate_config():
     default = Settings()
     assert type(settings) is Settings
 
-    setattr(settings, 'log_level', 'info')
+    setattr(settings, 'log_level', 'INFO')
     assert _validate_config(settings).log_level == 'INFO'
 
     setattr(settings, 'log_level', 'unnown')

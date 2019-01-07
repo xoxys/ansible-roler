@@ -1,3 +1,4 @@
+import six
 import os
 import logging
 import ansibleroler.utils as utils
@@ -28,7 +29,7 @@ def test_convert_bool():
     assert utils.convert_bool(False) is False
     assert utils.convert_bool('False') is False
     assert utils.convert_bool('no') is False
-    assert type(utils.convert_bool('string')) is str
+    assert type(utils.convert_bool('string')) is six.text_type
     assert utils.convert_bool('string') == 'string'
 
 
