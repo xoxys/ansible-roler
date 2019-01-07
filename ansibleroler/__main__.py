@@ -35,7 +35,7 @@ def main():
         try:
             add_role(settings)
         except OSError as e:
-            logger.warn("{}. Aborted.".format(e))
+            logger.error("{}. Aborted.".format(e))
 
 
 if __name__ == "__main__":

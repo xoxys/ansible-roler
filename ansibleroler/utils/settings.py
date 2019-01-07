@@ -13,9 +13,6 @@ def get_settings(options):
     defaults = Settings()
     config_file = normalize_path(options.config_file)
 
-    if not os.path.exists(config_file):
-        logger.warning("Config file '{}' not found. Use default settings.".format(config_file))
-
     config = configparser.ConfigParser()
     config.read(config_file)
 
@@ -35,8 +32,14 @@ def get_settings(options):
         if value:
             setattr(defaults, key, value)
 
+    if isinstance(defaults.log_level, str) or isinstance(defaults.log_level, basestring):
+        defaults.log_level = defaults.log_level.upper()
+
     settings = _validate_config(defaults)
     update_log_level(log_level=settings.log_level)
+
+    if not os.path.exists(config_file):
+        logger.warning("Config file '{}' not found. Use default settings.".format(config_file))
 
     return settings
 
@@ -44,12 +47,10 @@ def get_settings(options):
 def _validate_config(settings):
     logger = logging.getLogger("ansibleroler")
     defaults = Settings()
-    log_level_allowed = ('warning', 'error', 'info', 'debug', 10, 20, 30, 40)
+    log_level_allowed = ('WARNING', 'ERROR', 'INFO', 'DEBUG', 10, 20, 30, 40)
 
-    if settings.log_level in log_level_allowed:
-        if isinstance(settings.log_level, str):
-            settings.log_level = settings.log_level.upper()
-    else:
+    if settings.log_level not in log_level_allowed:
+        print(settings.log_level)
         logger.warning(
             "Misconfigured value for 'log_level'. Set to default '{}'".format(defaults.log_level))
         settings.log_level = defaults.log_level

@@ -1,3 +1,2 @@
-- CHANGES
-  - first build release
-  - provide pre-puild packages and publish releases to pypi
+- BUGFIX
+  - Fix wrong indentation in default subdir template ([#3](https://github.com/xoxys/ansible-roler/issues/3))

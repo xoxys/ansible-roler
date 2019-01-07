@@ -48,7 +48,7 @@ class Settings(object):
         config_file=os.path.join(AppDirs("ansible-roler").user_config_dir, "config.ini"),
         role_name=None,
         base_path=os.getcwd(),
-        log_level='WARNING',
+        log_level='ERROR',
         subdir_template=os.path.join(resource_filename('ansibleroler', 'static'), 'templates', 'main.yml.j2'),
         root_template=os.path.join(resource_filename('ansibleroler', 'static'), 'templates', '.drone.yml.j2'),
         enable_templating=False,
