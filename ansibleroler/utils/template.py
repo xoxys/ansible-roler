@@ -14,17 +14,17 @@ def add_role(settings):
     }
 
     if settings.enable_templating and settings.root_template:
-        _render_template(settings.root_template, base, template_context)
+        _render_template(normalize_path(settings.root_template), base, template_context)
 
     for subdir in subdirs:
         path = os.path.join(base, subdir)
         os.makedirs(path)
 
         template_context.update({'subdir': subdir})
-        if subdir not in ['templates', 'files', 'vars'] \
+        if subdir not in settings.exclude_subdirs \
            and settings.enable_templating \
            and settings.subdir_template:
-            _render_template(settings.subdir_template, path, template_context)
+            _render_template(normalize_path(settings.subdir_template), path, template_context)
     return
 
 

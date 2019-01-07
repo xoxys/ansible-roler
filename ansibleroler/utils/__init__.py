@@ -39,7 +39,7 @@ def convert_bool(obj):
     elif obj in false_values:
         return False
     else:
-        return obj
+        return obj.encode("utf-8")
 
 
 class Settings(object):
@@ -48,9 +48,10 @@ class Settings(object):
         config_file=os.path.join(AppDirs("ansible-roler").user_config_dir, "config.ini"),
         role_name=None,
         base_path=os.getcwd(),
-        log_level='ERROR',
+        log_level='WARNING',
         subdir_template=os.path.join(resource_filename('ansibleroler', 'static'), 'templates', 'main.yml.j2'),
         root_template=os.path.join(resource_filename('ansibleroler', 'static'), 'templates', '.drone.yml.j2'),
+        exclude_subdirs=['templates', 'files', 'vars'],
         enable_templating=False,
         template_vars={}
     ):
@@ -61,5 +62,6 @@ class Settings(object):
         self.log_level = log_level
         self.subdir_template = subdir_template
         self.root_template = root_template
+        self.exclude_subdirs = exclude_subdirs
         self.enable_templating = enable_templating
         self.template_vars = template_vars

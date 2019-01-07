@@ -1,6 +1,6 @@
 import os
 import logging
-import configparser
+from configparser import ConfigParser
 from collections import defaultdict
 from ansibleroler.utils import Settings
 from ansibleroler.utils import normalize_path
@@ -13,14 +13,14 @@ def get_settings(options):
     defaults = Settings()
     config_file = normalize_path(options.config_file)
 
-    config = configparser.ConfigParser()
+    config = ConfigParser()
     config.read(config_file)
 
     template_vars = defaultdict(dict)
 
-    for sections in config.sections():
-        for key, value in config.items(sections):
-            if not sections == "template-vars":
+    for section in config.sections():
+        for key, value in config.items(section):
+            if not section == "template-vars":
                 setattr(defaults, key, convert_bool(value))
             else:
                 split = key.split("_", 1)
@@ -32,14 +32,21 @@ def get_settings(options):
         if value:
             setattr(defaults, key, value)
 
-    if isinstance(defaults.log_level, str) or isinstance(defaults.log_level, basestring):
+    # Transform loglevel string
+    if isinstance(defaults.log_level, str):
         defaults.log_level = defaults.log_level.upper()
 
     settings = _validate_config(defaults)
     update_log_level(log_level=settings.log_level)
 
+    # Transform string to array for exclude_subdirs
+    if isinstance(defaults.exclude_subdirs, str):
+        settings.exclude_subdirs = [x.strip() for x in settings.exclude_subdirs.split(",")]
+    elif not settings.exclude_subdirs:
+        settings.exclude_subdirs = []
+
     if not os.path.exists(config_file):
-        logger.warning("Config file '{}' not found. Use default settings.".format(config_file))
+        logger.info("Config file '{}' not found. Use default settings.".format(config_file))
 
     return settings
 
@@ -50,7 +57,6 @@ def _validate_config(settings):
     log_level_allowed = ('WARNING', 'ERROR', 'INFO', 'DEBUG', 10, 20, 30, 40)
 
     if settings.log_level not in log_level_allowed:
-        print(settings.log_level)
         logger.warning(
             "Misconfigured value for 'log_level'. Set to default '{}'".format(defaults.log_level))
         settings.log_level = defaults.log_level
@@ -59,5 +65,10 @@ def _validate_config(settings):
         logger.warning(
             "Misconfigured value for 'enable_templating'. Set to default '{}'".format(defaults.enable_templating))
         settings.enable_templating = defaults.enable_templating
+
+    if not all(isinstance(s.encode('utf8'), str) for s in settings.exclude_subdirs):
+        logger.warning(
+            "Misconfigured value for 'exclude_subdirs'. Set to default '{}'".format(defaults.exclude_subdirs))
+        settings.exclude_subdirs = defaults.exclude_subdirs
 
     return settings
