@@ -19,8 +19,8 @@ def main():
                         help="Show more verbose output", default=None)
     parser.add_argument('--version', action='version', version='%(prog)s {}'.format(__version__))
 
-    requiredNamed = parser.add_argument_group('required arguments')
-    requiredNamed.add_argument('-n', '--name', action="store", dest="role_name", metavar="NAME",
+    required_args = parser.add_argument_group('required arguments')
+    required_args.add_argument('-n', '--name', action="store", dest="role_name", metavar="NAME",
                                help="Name of the new role", default=None, required=True)
 
     options = parser.parse_args()
