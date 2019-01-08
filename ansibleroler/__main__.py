@@ -13,13 +13,15 @@ def main():
     parser = argparse.ArgumentParser(description="Manage ansible role environments")
     parser.add_argument('-c', dest='config_file', default=defaults.config_file,
                         help="Location of configuration file: [%s]" % defaults.config_file)
-    parser.add_argument('-n', '--name', action="store", dest="role_name", metavar="NAME",
-                        help="Name of the new role", default=None)
     parser.add_argument('-p', '--path', action="store", dest="base_path", metavar="PATH",
                         help="Path where the new role will be created", default=None)
     parser.add_argument('-v', '--verbose', dest='log_level', action="count",
                         help="Show more verbose output", default=None)
     parser.add_argument('--version', action='version', version='%(prog)s {}'.format(__version__))
+
+    requiredNamed = parser.add_argument_group('required arguments')
+    requiredNamed.add_argument('-n', '--name', action="store", dest="role_name", metavar="NAME",
+                               help="Name of the new role", default=None, required=True)
 
     options = parser.parse_args()
 
@@ -31,13 +33,10 @@ def main():
     settings = get_settings(options)
     logger = logging.getLogger("ansibleroler")
 
-    if not (settings.role_name):
-        parser.error('No rolename provided but required.')
-    else:
-        try:
-            add_role(settings)
-        except OSError as e:
-            logger.error("{}. Aborted.".format(e))
+    try:
+        add_role(settings)
+    except OSError as e:
+        logger.error("{}. Aborted.".format(e))
 
 
 if __name__ == "__main__":
