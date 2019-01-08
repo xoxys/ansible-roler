@@ -2,3 +2,5 @@
   - Fix wrong indentation in default subdir template ([d78c69f](https://github.com/xoxys/ansible-roler/commit/d78c69f7497266832eb73ec59da7f0f70328c474))
   - Fix loglevel from config file does not work ([957e661](https://github.com/xoxys/ansible-roler/commit/957e661134b3af61364347fec90fa2f32abfa0a7))
   - Fix template path from config file ([c6c30bf](https://github.com/xoxys/ansible-roler/commit/884b887014eaa18460c15e64108a2b43b95fd162))
+- ENHANCEMENT
+  - Add new parameter `exclude_subdirs` to exclude role subdirs from templating
