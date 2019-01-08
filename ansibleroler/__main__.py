@@ -3,6 +3,7 @@
 
 import logging
 import argparse
+from ansibleroler import __version__
 from ansibleroler import defaults
 from ansibleroler.utils.settings import get_settings
 from ansibleroler.utils.template import add_role
@@ -18,6 +19,7 @@ def main():
                         help="Path where the new role will be created", default=None)
     parser.add_argument('-v', '--verbose', dest='log_level', action="count",
                         help="Show more verbose output", default=None)
+    parser.add_argument('--version', action='version', version='%(prog)s {}'.format(__version__))
 
     options = parser.parse_args()
 
