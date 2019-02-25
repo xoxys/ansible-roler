@@ -1,164 +1,198 @@
 ---
 kind: pipeline
-name: default
+name: testing
+
+platform:
+  os: linux
+  arch: amd64
 
 steps:
-  - name: test2.7
-    image: python:2.7-alpine
-    pull: always
-    commands:
-      - apk add --no-cache make
-      - make prepare
-      - make lint
-      - make test
-    when:
-      event:
-        - push
-        - tag
+- name: python2.7
+  pull: always
+  image: python:2.7
+  commands:
+  - pip install --upgrade pip setuptools wheel virtualenv -q
+  - virtualenv /env-test
+  - "env /env-test/bin/pip install ${PYTHON_TEST} -q"
+  - env /env-test/bin/pip install -e . -q
+  - env /env-test/bin/pytest --cov=ansibleroler tests/ -v
+  - virtualenv /env-lint
+  - "env /env-lint/bin/pip install ${PYTHON_LINT} -q"
+  - env /env-lint/bin/flake8 ansibleroler
+  environment:
+    PYTHON_LINT: flake8 flake8-colors pep8-naming
+    PYTHON_TEST: pytest pytest-cov pytest-mock
 
-  - name: test3.4
-    image: python:3.4-alpine
-    pull: always
-    commands:
-      - apk add --no-cache make
-      - make prepare
-      - make lint
-      - make test
-    when:
-      event:
-        - push
-        - tag
+- name: python3.4
+  pull: always
+  image: python:3.4
+  commands:
+  - pip install --upgrade pip setuptools wheel virtualenv -q
+  - virtualenv /env-test
+  - "env /env-test/bin/pip install ${PYTHON_TEST} -q"
+  - env /env-test/bin/pip install -e . -q
+  - env /env-test/bin/pytest --cov=ansibleroler tests/ -v
+  - virtualenv /env-lint
+  - "env /env-lint/bin/pip install ${PYTHON_LINT} -q"
+  - env /env-lint/bin/flake8 ansibleroler
+  environment:
+    PYTHON_LINT: flake8 flake8-colors pep8-naming
+    PYTHON_TEST: pytest pytest-cov pytest-mock
 
-  - name: test3.5
-    image: python:3.5-alpine
-    pull: always
-    commands:
-      - apk add --no-cache make
-      - make prepare
-      - make lint
-      - make test
-    when:
-      event:
-        - push
-        - tag
+- name: python3.5
+  pull: always
+  image: python:3.5
+  commands:
+  - pip install --upgrade pip setuptools wheel virtualenv -q
+  - virtualenv /env-test
+  - "env /env-test/bin/pip install ${PYTHON_TEST} -q"
+  - env /env-test/bin/pip install -e . -q
+  - env /env-test/bin/pytest --cov=ansibleroler tests/ -v
+  - virtualenv /env-lint
+  - "env /env-lint/bin/pip install ${PYTHON_LINT} -q"
+  - env /env-lint/bin/flake8 ansibleroler
+  environment:
+    PYTHON_LINT: flake8 flake8-colors pep8-naming
+    PYTHON_TEST: pytest pytest-cov pytest-mock
 
-  - name: test3.6
-    image: python:3.6-alpine
-    pull: always
-    commands:
-      - apk add --no-cache make
-      - make prepare
-      - make lint
-      - make test
-    when:
-      event:
-        - push
-        - tag
+- name: python3.6
+  pull: always
+  image: python:3.6
+  commands:
+  - pip install --upgrade pip setuptools wheel virtualenv -q
+  - virtualenv /env-test
+  - "env /env-test/bin/pip install ${PYTHON_TEST} -q"
+  - env /env-test/bin/pip install -e . -q
+  - env /env-test/bin/pytest --cov=ansibleroler tests/ -v
+  - virtualenv /env-lint
+  - "env /env-lint/bin/pip install ${PYTHON_LINT} -q"
+  - env /env-lint/bin/flake8 ansibleroler
+  environment:
+    PYTHON_LINT: flake8 flake8-colors pep8-naming
+    PYTHON_TEST: pytest pytest-cov pytest-mock
 
-  - name: test3.7
-    image: python:3.7-alpine
-    pull: always
-    commands:
-      - apk add --no-cache make
-      - make prepare
-      - make lint
-      - make test
-    when:
-      event:
-        - push
-        - tag
+- name: python3.7
+  pull: always
+  image: python:3.7
+  commands:
+  - pip install --upgrade pip setuptools wheel virtualenv -q
+  - virtualenv /env-test
+  - "env /env-test/bin/pip install ${PYTHON_TEST} -q"
+  - env /env-test/bin/pip install -e . -q
+  - env /env-test/bin/pytest --cov=ansibleroler tests/ -v
+  - virtualenv /env-lint
+  - "env /env-lint/bin/pip install ${PYTHON_LINT} -q"
+  - env /env-lint/bin/flake8 ansibleroler
+  environment:
+    PYTHON_LINT: flake8 flake8-colors pep8-naming
+    PYTHON_TEST: pytest pytest-cov pytest-mock
 
-  - name: build
-    image: python:3.7-alpine
-    pull: always
-    commands:
-      - python setup.py sdist bdist_wheel
-    when:
-      event:
-        - push
-        - tag
-    depends_on:
-      - test2.7
-      - test3.4
-      - test3.5
-      - test3.6
-      - test3.7
+trigger:
+  branch:
+  - master
 
-  - name: checksum
-    image: alpine
-    pull: always
-    commands:
-      - apk add --no-cache coreutils
-      # exclude files
-      # - sha256sum -b files/!(*.out) > CHECKSUMFILE
-      - sha256sum -b dist/* > sha256sum.txt
-    when:
-      event:
-        - push
-        - tag
-    depends_on:
-      - test2.7
-      - test3.4
-      - test3.5
-      - test3.6
-      - test3.7
+---
+kind: pipeline
+name: build
 
-  - name: gpg-sign
-    image: plugins/gpgsign:1
-    pull: always
-    settings:
-      key:
-        from_secret: gpgsign_key
-      passphrase:
-        from_secret: gpgsign_passphrase
-      detach_sign: true
-      files:
-        - dist/*
-    when:
-      event:
-        - push
-        - tag
-    depends_on:
-      - test2.7
-      - test3.4
-      - test3.5
-      - test3.6
-      - test3.7
+platform:
+  os: linux
+  arch: amd64
 
-  - name: publish
-    image: plugins/github-release
-    settings:
-      api_key:
-        from_secret: github_token
-      files:
-        - dist/*
-        - sha256sum.txt
-    when:
-      event:
-        - tag
-    depends_on:
-      - test2.7
-      - test3.4
-      - test3.5
-      - test3.6
-      - test3.7
+steps:
+- name: build
+  pull: always
+  image: python:3.7
+  commands:
+  - python setup.py sdist bdist_wheel
 
-  - name: pypi_publish
-    image: xoxys/drone-pypi:0.1.0
-    pull: always
-    settings:
-      username:
-        from_secret: pypi_username
-      password:
-        from_secret: pypi_password
-      repository: https://upload.pypi.org/legacy/
-      skip_build: true
-    when:
-      event:
-        - tag
-    depends_on:
-      - test2.7
-      - test3.4
-      - test3.5
-      - test3.6
-      - test3.7
+- name: checksum
+  pull: always
+  image: alpine
+  commands:
+  - apk add --no-cache coreutils
+  - "sha256sum -b dist/* > sha256sum.txt"
+  when:
+    event:
+    - push
+    - tag
+
+- name: gpg-sign
+  pull: always
+  image: plugins/gpgsign:1
+  settings:
+    detach_sign: true
+    files:
+    - "dist/*"
+    key:
+      from_secret: gpgsign_key
+    passphrase:
+      from_secret: gpgsign_passphrase
+
+- name: publish-github
+  pull: always
+  image: plugins/github-release
+  settings:
+    api_key:
+      from_secret: github_token
+    files:
+    - "dist/*"
+    - sha256sum.txt
+  when:
+    event:
+    - tag
+
+# - name: publish-pypi
+#   pull: always
+#   image: plugins/pypi
+#   settings:
+#     password:
+#       from_secret: pypi_password
+#     repository: https://upload.pypi.org/legacy/
+#     skip_build: true
+#     username:
+#       from_secret: pypi_username
+#   when:
+#     event:
+#     - tag
+
+trigger:
+  branch:
+  - master
+
+depends_on:
+- testing
+
+# ---
+# kind: pipeline
+# name: notifications
+
+# platform:
+#   os: linux
+#   arch: amd64
+
+# steps:
+# - image: plugins/matrix
+#   settings:
+#     homeserver: https://matrix.rknet.org
+#     password:
+#       from_secret: matrix_password
+#     roomid: MtidqQXWWAtQcByBhH:rknet.org
+#     template: "Status: **{{ build.status }}**<br/> Build: [{{ repo.Owner }}/{{ repo.Name }}]({{ build.link }}) ({{ build.branch }}) by {{ build.author }}<br/> Message: {{ build.message }}"
+#     username:
+#       from_secret: matrix_username
+
+# trigger:
+#   branch:
+#   - master
+#   event:
+#   - push
+#   - tag
+#   status:
+#   - success
+#   - failure
+
+# depends_on:
+# - build
+
+...
