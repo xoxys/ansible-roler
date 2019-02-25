@@ -64,9 +64,6 @@ local PipelineBuild = {
         "apk add --no-cache coreutils",
         "sha256sum -b dist/* > sha256sum.txt"
       ],
-      when: {
-        event: [ "push", "tag" ],
-      },
     },
     {
       name: "gpg-sign",
