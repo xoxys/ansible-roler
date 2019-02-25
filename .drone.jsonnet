@@ -9,11 +9,11 @@ local PythonVersions(pyversion="2.7") = {
     commands: [
       "pip install --upgrade pip setuptools wheel virtualenv -q",
       "virtualenv /env-test",
-      "env /env-test/bin/pip install ${PYTHON_TEST} -q",
+      "env /env-test/bin/pip install $PYTHON_TEST -q",
       "env /env-test/bin/pip install -e . -q",
       "env /env-test/bin/pytest --cov=ansibleroler tests/ -v",
       "virtualenv /env-lint",
-	  "env /env-lint/bin/pip install ${PYTHON_LINT} -q",
+	  "env /env-lint/bin/pip install $PYTHON_LINT -q",
 	  "env /env-lint/bin/flake8 ansibleroler"
     ],
     depends_on: [
