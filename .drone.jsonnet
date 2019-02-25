@@ -10,7 +10,7 @@ local PythonVersions(pyversion="2.7") = {
       "pip install --upgrade pip setuptools wheel virtualenv -qq",
       "virtualenv /env-test",
       "env /env-test/bin/pip install $PYTHON_TEST -qq",
-      "env /env-test/bin/pip install -e . -q",
+      "env /env-test/bin/pip install -e . -qq",
       "env /env-test/bin/pytest --cov=ansibleroler tests/ -v",
       "virtualenv /env-lint",
 	  "env /env-lint/bin/pip install $PYTHON_LINT -qq",
