@@ -11,13 +11,13 @@ steps:
   pull: always
   image: python:2.7
   commands:
-  - pip install --upgrade pip setuptools wheel virtualenv -q
+  - pip install --upgrade pip setuptools wheel virtualenv -qq
   - virtualenv /env-test
-  - env /env-test/bin/pip install $PYTHON_TEST -q
+  - env /env-test/bin/pip install $PYTHON_TEST -qq
   - env /env-test/bin/pip install -e . -q
   - env /env-test/bin/pytest --cov=ansibleroler tests/ -v
   - virtualenv /env-lint
-  - env /env-lint/bin/pip install $PYTHON_LINT -q
+  - env /env-lint/bin/pip install $PYTHON_LINT -qq
   - env /env-lint/bin/flake8 ansibleroler
   environment:
     PYTHON_LINT: flake8 flake8-colors pep8-naming
@@ -29,13 +29,13 @@ steps:
   pull: always
   image: python:3.4
   commands:
-  - pip install --upgrade pip setuptools wheel virtualenv -q
+  - pip install --upgrade pip setuptools wheel virtualenv -qq
   - virtualenv /env-test
-  - env /env-test/bin/pip install $PYTHON_TEST -q
+  - env /env-test/bin/pip install $PYTHON_TEST -qq
   - env /env-test/bin/pip install -e . -q
   - env /env-test/bin/pytest --cov=ansibleroler tests/ -v
   - virtualenv /env-lint
-  - env /env-lint/bin/pip install $PYTHON_LINT -q
+  - env /env-lint/bin/pip install $PYTHON_LINT -qq
   - env /env-lint/bin/flake8 ansibleroler
   environment:
     PYTHON_LINT: flake8 flake8-colors pep8-naming
@@ -47,13 +47,13 @@ steps:
   pull: always
   image: python:3.5
   commands:
-  - pip install --upgrade pip setuptools wheel virtualenv -q
+  - pip install --upgrade pip setuptools wheel virtualenv -qq
   - virtualenv /env-test
-  - env /env-test/bin/pip install $PYTHON_TEST -q
+  - env /env-test/bin/pip install $PYTHON_TEST -qq
   - env /env-test/bin/pip install -e . -q
   - env /env-test/bin/pytest --cov=ansibleroler tests/ -v
   - virtualenv /env-lint
-  - env /env-lint/bin/pip install $PYTHON_LINT -q
+  - env /env-lint/bin/pip install $PYTHON_LINT -qq
   - env /env-lint/bin/flake8 ansibleroler
   environment:
     PYTHON_LINT: flake8 flake8-colors pep8-naming
@@ -65,13 +65,13 @@ steps:
   pull: always
   image: python:3.6
   commands:
-  - pip install --upgrade pip setuptools wheel virtualenv -q
+  - pip install --upgrade pip setuptools wheel virtualenv -qq
   - virtualenv /env-test
-  - env /env-test/bin/pip install $PYTHON_TEST -q
+  - env /env-test/bin/pip install $PYTHON_TEST -qq
   - env /env-test/bin/pip install -e . -q
   - env /env-test/bin/pytest --cov=ansibleroler tests/ -v
   - virtualenv /env-lint
-  - env /env-lint/bin/pip install $PYTHON_LINT -q
+  - env /env-lint/bin/pip install $PYTHON_LINT -qq
   - env /env-lint/bin/flake8 ansibleroler
   environment:
     PYTHON_LINT: flake8 flake8-colors pep8-naming
@@ -83,13 +83,13 @@ steps:
   pull: always
   image: python:3.7
   commands:
-  - pip install --upgrade pip setuptools wheel virtualenv -q
+  - pip install --upgrade pip setuptools wheel virtualenv -qq
   - virtualenv /env-test
-  - env /env-test/bin/pip install $PYTHON_TEST -q
+  - env /env-test/bin/pip install $PYTHON_TEST -qq
   - env /env-test/bin/pip install -e . -q
   - env /env-test/bin/pytest --cov=ansibleroler tests/ -v
   - virtualenv /env-lint
-  - env /env-lint/bin/pip install $PYTHON_LINT -q
+  - env /env-lint/bin/pip install $PYTHON_LINT -qq
   - env /env-lint/bin/flake8 ansibleroler
   environment:
     PYTHON_LINT: flake8 flake8-colors pep8-naming
