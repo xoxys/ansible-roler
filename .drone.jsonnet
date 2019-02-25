@@ -35,9 +35,6 @@ local PipelineTesting = {
     PythonVersions(pyversion="3.6"),
     PythonVersions(pyversion="3.7"),
   ],
-  trigger: {
-    branch: [ "master" ],
-  },
 };
 
 local PipelineBuild = {
@@ -92,9 +89,6 @@ local PipelineBuild = {
   depends_on: [
     "testing",
   ],
-  trigger: {
-    branch: [ "master" ],
-  },
 };
 
 local PipelineNotifications = {
@@ -120,7 +114,6 @@ local PipelineNotifications = {
     "build",
   ],
   trigger: {
-    branch: [ "master" ],
     event: [ "push", "tag" ],
     status: [ "success", "failure" ],
   },
