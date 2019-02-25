@@ -97,10 +97,6 @@ steps:
   depends_on:
   - clone
 
-trigger:
-  branch:
-  - master
-
 ---
 kind: pipeline
 name: build
@@ -147,10 +143,6 @@ steps:
   when:
     event:
     - tag
-
-trigger:
-  branch:
-  - master
 
 depends_on:
 - testing
