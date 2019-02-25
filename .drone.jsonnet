@@ -7,14 +7,17 @@ local PythonVersions(pyversion="2.7") = {
       PYTHON_TEST: "pytest pytest-cov pytest-mock"
     },
     commands: [
-    "pip install --upgrade pip setuptools wheel virtualenv -q",
-    "virtualenv /env-test",
-    "env /env-test/bin/pip install ${PYTHON_TEST} -q",
-    "env /env-test/bin/pip install -e . -q",
-    "env /env-test/bin/pytest --cov=ansibleroler tests/ -v",
-    "virtualenv /env-lint",
-	"env /env-lint/bin/pip install ${PYTHON_LINT} -q",
-	"env /env-lint/bin/flake8 ansibleroler"
+      "pip install --upgrade pip setuptools wheel virtualenv -q",
+      "virtualenv /env-test",
+      "env /env-test/bin/pip install ${PYTHON_TEST} -q",
+      "env /env-test/bin/pip install -e . -q",
+      "env /env-test/bin/pytest --cov=ansibleroler tests/ -v",
+      "virtualenv /env-lint",
+	  "env /env-lint/bin/pip install ${PYTHON_LINT} -q",
+	  "env /env-lint/bin/flake8 ansibleroler"
+    ],
+    depends_on: [
+      "clone",
     ],
 };
 
@@ -88,20 +91,6 @@ local PipelineBuild = {
         event: [ "tag" ],
       },
     },
-    {
-      name: "publish-pypi",
-      image: "plugins/pypi",
-      pull: "always",
-      settings: {
-        username: { "from_secret": "pypi_username" },
-        password: { "from_secret": "pypi_password" },
-        repository: "https://upload.pypi.org/legacy/",
-        skip_build: true
-      },
-      when: {
-        event: [ "tag" ],
-      },
-    },
   ],
   depends_on: [
     "testing",
@@ -143,5 +132,4 @@ local PipelineNotifications = {
 [
   PipelineTesting,
   PipelineBuild,
-  PipelineNotifications,
 ]

@@ -22,6 +22,8 @@ steps:
   environment:
     PYTHON_LINT: flake8 flake8-colors pep8-naming
     PYTHON_TEST: pytest pytest-cov pytest-mock
+  depends_on:
+  - clone
 
 - name: python3.4
   pull: always
@@ -38,6 +40,8 @@ steps:
   environment:
     PYTHON_LINT: flake8 flake8-colors pep8-naming
     PYTHON_TEST: pytest pytest-cov pytest-mock
+  depends_on:
+  - clone
 
 - name: python3.5
   pull: always
@@ -54,6 +58,8 @@ steps:
   environment:
     PYTHON_LINT: flake8 flake8-colors pep8-naming
     PYTHON_TEST: pytest pytest-cov pytest-mock
+  depends_on:
+  - clone
 
 - name: python3.6
   pull: always
@@ -70,6 +76,8 @@ steps:
   environment:
     PYTHON_LINT: flake8 flake8-colors pep8-naming
     PYTHON_TEST: pytest pytest-cov pytest-mock
+  depends_on:
+  - clone
 
 - name: python3.7
   pull: always
@@ -86,6 +94,8 @@ steps:
   environment:
     PYTHON_LINT: flake8 flake8-colors pep8-naming
     PYTHON_TEST: pytest pytest-cov pytest-mock
+  depends_on:
+  - clone
 
 trigger:
   branch:
@@ -142,57 +152,11 @@ steps:
     event:
     - tag
 
-# - name: publish-pypi
-#   pull: always
-#   image: plugins/pypi
-#   settings:
-#     password:
-#       from_secret: pypi_password
-#     repository: https://upload.pypi.org/legacy/
-#     skip_build: true
-#     username:
-#       from_secret: pypi_username
-#   when:
-#     event:
-#     - tag
-
 trigger:
   branch:
   - master
 
 depends_on:
 - testing
-
-# ---
-# kind: pipeline
-# name: notifications
-
-# platform:
-#   os: linux
-#   arch: amd64
-
-# steps:
-# - image: plugins/matrix
-#   settings:
-#     homeserver: https://matrix.rknet.org
-#     password:
-#       from_secret: matrix_password
-#     roomid: MtidqQXWWAtQcByBhH:rknet.org
-#     template: "Status: **{{ build.status }}**<br/> Build: [{{ repo.Owner }}/{{ repo.Name }}]({{ build.link }}) ({{ build.branch }}) by {{ build.author }}<br/> Message: {{ build.message }}"
-#     username:
-#       from_secret: matrix_username
-
-# trigger:
-#   branch:
-#   - master
-#   event:
-#   - push
-#   - tag
-#   status:
-#   - success
-#   - failure
-
-# depends_on:
-# - build
 
 ...
