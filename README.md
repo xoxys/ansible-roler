@@ -1,5 +1,7 @@
 # ansible-roler
 
+> __DEPRECATED:__ ansible-roler is no longer actively maintained. I recommend using some templating tools like [cookiecutter](https://github.com/cookiecutter/cookiecutter). You can find an Ansible example [here](https://gitea.rknet.org/xoxys/cookiecutter-ansible-role).
+
 [![Build Status](https://cloud.drone.io/api/badges/xoxys/ansible-roler/status.svg)](https://cloud.drone.io/xoxys/ansible-roler)
 [![](https://img.shields.io/pypi/pyversions/ansible-roler.svg)](https://pypi.org/project/ansible-roler/)
 [![](https://img.shields.io/pypi/status/ansible-roler.svg)](https://pypi.org/project/ansible-roler/)
